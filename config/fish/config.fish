@@ -26,9 +26,8 @@ end
 function fzf-ghq-cd
   set selected_path (ghq list --full-path | fzf)
   if test -n "$selected_path"
-    commandline "cd $selected_path"
+    commandline "cd $selected_path" & commandline -f execute
   end
-  commandline -f repaint
 end
 
 function fzf-history
