@@ -1,27 +1,60 @@
-# 環境変数
-set -x GOPATH $HOME/Dev
+# ---environments---
+set -x GOPATH $HOME/dev
+set -x GOROOT /usr/local/Cellar/go/1.9.2/libexec
 set -x PATH $PATH $GOROOT/bin
 set -x PATH $PATH $GOPATH/bin
-
-set -x PATH $PATH $HOME/Library/Python/3.7/bin
 set -x PATH $PATH $HOME/.nodebrew/current/bin
-set -x PATH $PATH /usr/local/opt/cassandra/bin
-set -x LIBRARY_PATH $LIBRARY_PATH /usr/local/opt/openssl/lib
-set -x JAVA_HOME (/usr/libexec/java_home -v "1.8")
-set -x PATH $PATH $JAVA_HOME/bin
-set -x PATH $PATH /Users/yuichi.nishitani/Dev/github.com/yuichi-nishitani/beaver/node_modules/.bin
+set -x LIBRARY_PATH /usr/local/opt/openssl/lib/
 
-status --is-interactive; and source (rbenv init -|psub)
+# ---functions---
 
-# THEME PURE #
-# set fish_function_path /Users/nishitaniyuuichi/.config/fish/functions/theme-pure/functions/ $fish_function_path
-
-# cd後にls 
+# cd後にexa
 function cd 
-    builtin cd $argv; and ls
+  builtin cd $argv; and exa
 end
 
-alias chrome='open -a "Google Chrome"'
-alias rubymine='open -a "RubyMine"'
+# fzfでPRチェックアウト
+function fzf-checkout-pull-request
+  set selected_pr_id (gh pr list | fzf | awk '{ print $1 }')
+  if test -n "$selected_pr_id"
+    commandline "gh pr checkout $selected_pr_id"
+  end
+  commandline -f repaint
+end
 
-bind \cs 'vi ~/.config/fish/config.fish'
+# fzfでリポジトリにcd
+function fzf-ghq-cd
+  set selected_path (ghq list --full-path | fzf)
+  if test -n "$selected_path"
+    commandline "cd $selected_path"
+  end
+  commandline -f repaint
+end
+
+function fzf-history
+  set selected_path (history | fzf --no-sort)
+  if test -n "$selected_path"
+    commandline "$selected_path"
+  end
+  commandline -f repaint
+end
+
+# ---aliases---
+
+alias chrome='open -a "Google Chrome"'
+alias mine='open -a "RubyMine.app"'
+alias vi='/usr/local/Cellar/vim/8.2.0750/bin/vim'
+
+# ---binds---
+
+bind -M insert \cr fzf-history
+bind -M insert \cg fzf-ghq-cd
+bind -M insert \ch fzf-checkout-pull-request
+
+bind -M insert \cp up-or-search
+bind -M insert \cf forward-char
+bind -M insert \cb backward-char
+bind -M insert \ca beginning-of-line
+bind -M insert \ce end-of-line
+
+status --is-interactive; and source (rbenv init -|psub)
