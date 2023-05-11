@@ -1,0 +1,7 @@
+# checkout -b
+bind branch B ?git checkout -B "%(prompt Enter new branch name:)" %(branch)
+bind main   B ?git checkout -B "%(prompt Enter new branch name:)" %(commit)
+# commitハッシュをコピー
+bind generic y @sh -c "echo %(commit) | cut -c 1-8 | pbcopy"
+# create tag
+bind generic T !git tag %(prompt Enter new tag name:)
