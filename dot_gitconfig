@@ -1,0 +1,5 @@
+[user]
+	name = yuichi.nishitani
+	email = hawkk9.public@gmail.com
+[push]
+	autoSetupRemote = true
