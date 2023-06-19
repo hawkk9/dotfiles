@@ -1,8 +1,10 @@
 alias chrome='open -a "Google Chrome"'
 alias vscode='open -a "Visual Studio Code"'
 
-# cd後にls 
-function cd 
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
+
+# cd後にls
+function cd
     builtin cd $argv; and ls
 end
 
