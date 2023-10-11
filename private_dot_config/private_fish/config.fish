@@ -16,3 +16,5 @@ function fzf-checkout-pull-request
   end
   commandline -f repaint
 end
+
+fish_add_path (brew --prefix)/opt/mysql-client/bin/
