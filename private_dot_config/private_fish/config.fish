@@ -1,5 +1,6 @@
 alias chrome='open -a "Google Chrome"'
 alias vscode='open -a "Visual Studio Code"'
+alias rubymine='open -a "RubyMine"'
 
 source /opt/homebrew/opt/asdf/libexec/asdf.fish
 
@@ -17,4 +18,5 @@ function fzf-checkout-pull-request
   commandline -f repaint
 end
 
+eval (/opt/homebrew/bin/brew shellenv)
 fish_add_path (brew --prefix)/opt/mysql-client/bin/
