@@ -20,3 +20,8 @@ end
 
 eval (/opt/homebrew/bin/brew shellenv)
 fish_add_path (brew --prefix)/opt/mysql-client/bin/
+
+# WarpでCtrl-gが使われているので代わりに
+function g
+  __ghq_repository_search
+end
